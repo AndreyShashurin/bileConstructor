@@ -1,32 +1,59 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<v-app>
+    <v-app-bar
+      absolute
+      color="deep-purple"
+      dark
+      elevate-on-scroll
+      scroll-target="#scrolling-techniques-2"
+    >
+    <params @params="disabledCat($event)"></params>
+  </v-app-bar>
+  <v-main >
+    <Main v-for="cat in categories" :key="cat.id" :cat='cat' :disabled="disabled"></Main>
+  </v-main>
+</v-app>
+
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import Vue from 'vue';
+import Main from './components/Main.vue';
+import params from './components/Params.vue';
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default Vue.extend({
+  name: 'App',
+  components: {
+    Main,
+    params
+  },
+    data () {
+      return {
+        show: false,
+        categories: [],
+        frameset: [],
+        dialog: false,
+        disabled: false
+      }
+    },
+    mounted() {
+      this.$store.dispatch('getCategories')
+      this.$store.subscribe((mutation, state) => {
+        this.categories = state.categories
+      })
+    },
+    methods: {
+      disabledCat(e: boolean) {
+        this.disabled = e
+        return e
+      }
     }
-  }
+});
+</script>
+<style scoped>
+header {
+    position: inherit !important; 
+    flex: 0 !important;
+    padding-top: 17px !important;
 }
 </style>
