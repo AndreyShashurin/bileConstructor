@@ -4,20 +4,20 @@
       v-model="dialog"
       max-width="700"
     >
-      <modalParams :error="error" :frameset="frameset" :name="cat.tableName"></modalParams>
+      <modalParams :error="error" :frameset="frameset" :name="сategory.tableName"></modalParams>
     </v-dialog>
     <v-card
       :disabled='disabled'
       class="mx-auto mb-5"
     >
       <v-card-title>
-        {{cat.name}}
+        {{сategory.name}}
       </v-card-title>
       <v-card-actions>
         <v-btn
           depressed
           color="primary"
-          @click.stop="openDialog(cat.id)"
+          @click.stop="openDialog(сategory.id)"
         >
           Добавить
         </v-btn>
@@ -59,6 +59,7 @@
 <script lang="ts">
   import Vue from 'vue';
   import modalParams from '@/components/modalParams.vue';
+  import { Category } from '@/interface/category.interface';
 
   export default Vue.extend({
     name: 'Main',
@@ -74,7 +75,14 @@
         dialog: false
       }
     },
-    props: ['cat', 'disabled'],
+    props: {
+      сategory: {
+        type: Category
+      },
+      disabled: {
+        type: Boolean
+      }
+    },
     methods: {
       openDialog(id: number) {
         this.dialog = !this.dialog

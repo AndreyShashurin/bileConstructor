@@ -10,7 +10,7 @@
     <params @params="disabledCat($event)"></params>
   </v-app-bar>
   <v-main >
-    <Main v-for="cat in categories" :key="cat.id" :cat='cat' :disabled="disabled"></Main>
+    <Main v-for="сategory in categories" :key="сategory.id" :cat='сategory' :disabled="disabled"></Main>
   </v-main>
 </v-app>
 
